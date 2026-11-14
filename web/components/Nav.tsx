@@ -7,6 +7,7 @@ const LINKS = [
   { id: "demo", label: "Demo" },
   { id: "problema", label: "Problema" },
   { id: "fuente", label: "Fuente" },
+  { id: "diseno", label: "Diseño" },
   { id: "pipeline", label: "Pipeline" },
   { id: "resultados", label: "Resultados" },
   { id: "problemas", label: "Problemas" },

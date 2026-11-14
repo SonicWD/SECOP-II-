@@ -10,6 +10,17 @@ type Meta = {
   linea_curso: { rea: string; aporte: string }[];
   criterio?: string;
   fuente?: string;
+  seleccion_modelo?: Seleccion;
+};
+
+type Seleccion = {
+  modelo_seleccionado: string;
+  modelos_probados: number;
+  criterio: string;
+  desempeno: Record<string, number>;
+  metricas_usadas: string[];
+  herramientas: string[];
+  modelos_comparados: string[];
 };
 
 type Resultados = {
@@ -23,11 +34,19 @@ type Resultados = {
   por_clase_mejores: { segmento: string; nombre: string; f1: number; soporte: number }[];
   por_clase_peores: { segmento: string; nombre: string; f1: number; soporte: number }[];
   busqueda: { recall_at_5: number; mrr_at_5: number; consultas: number };
+  modelos_probados?: number;
 };
 
 type PipelineData = {
   pipeline: { paso: number; nombre: string; detalle: string }[];
   problemas: { problema: string; solucion: string }[];
+  componentes?: { id: string; nombre: string; rol: string }[];
+  seleccion?: Seleccion;
+};
+
+type Diseno = {
+  componentes: { id: string; nombre: string; rol: string }[];
+  fuente: { nombre: string; url: string; acceso: string; etiqueta: string };
 };
 
 const TINTAS = ["tile-vino", "tile-ambar", "tile-miel", "tile-piedra"] as const;
@@ -41,20 +60,25 @@ export function Secciones() {
   const [meta, setMeta] = useState<Meta | null>(null);
   const [res, setRes] = useState<Resultados | null>(null);
   const [pipe, setPipe] = useState<PipelineData | null>(null);
+  const [diseno, setDiseno] = useState<Diseno | null>(null);
 
   useEffect(() => {
     Promise.all([
       fetch("/api/meta").then((r) => r.json()),
       fetch("/api/resultados").then((r) => r.json()),
       fetch("/api/pipeline").then((r) => r.json()),
+      fetch("/api/diseno").then((r) => r.json()),
     ])
-      .then(([m, r, p]) => {
+      .then(([m, r, p, d]) => {
         setMeta(m);
         setRes(r);
         setPipe(p);
+        setDiseno(d);
       })
       .catch(() => undefined);
   }, []);
+
+  const seleccion = meta?.seleccion_modelo || pipe?.seleccion;
 
   return (
     <>
@@ -85,15 +109,16 @@ export function Secciones() {
         <p>
           <a
             href={
+              diseno?.fuente?.url ||
               meta?.fuente ||
               "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos-de-Contrataci-n/p6dx-8zbt"
             }
             target="_blank"
             rel="noreferrer"
           >
-            SECOP II – Procesos de Contratación
+            {diseno?.fuente?.nombre || "SECOP II – Procesos de Contratación"}
           </a>{" "}
-          (datos.gov.co, p6dx-8zbt). API SODA pública, sin token.
+          (datos.gov.co, p6dx-8zbt). {diseno?.fuente?.acceso || "API SODA pública, sin token."}
         </p>
         {meta?.muestra ? (
           <div className="metric-grid">
@@ -110,6 +135,18 @@ export function Secciones() {
             ))}
           </div>
         ) : null}
+      </section>
+
+      <section className="panel panel-ambar" id="diseno" aria-labelledby="diseno-titulo">
+        <h2 id="diseno-titulo">Diseño esquemático de componentes</h2>
+        <div className="cards">
+          {(diseno?.componentes || pipe?.componentes || []).map((c, i) => (
+            <article className={`card ${TINTAS[i % TINTAS.length]}`} key={c.id}>
+              <h3 className="tile-label">{c.nombre}</h3>
+              <p>{c.rol}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="panel panel-ambar" id="pipeline" aria-labelledby="pipeline-titulo">
@@ -134,6 +171,47 @@ export function Secciones() {
 
       <section className="panel panel-vino" id="resultados" aria-labelledby="resultados-titulo">
         <h2 id="resultados-titulo">Resultados obtenidos</h2>
+        {seleccion ? (
+          <div className="dos" style={{ marginBottom: "1.1rem" }}>
+            <article className="tile tile-vino">
+              <h3 className="tile-label">Modelo seleccionado</h3>
+              <p>
+                <strong>{seleccion.modelo_seleccionado}</strong>
+                <br />
+                Se probaron <strong>{seleccion.modelos_probados}</strong> modelos.
+                <br />
+                Criterio: {seleccion.criterio}
+              </p>
+            </article>
+            <article className="tile tile-ambar">
+              <h3 className="tile-label">Desempeño</h3>
+              <ul className="lista">
+                <li>
+                  <strong>F1 CV</strong> {fmt(seleccion.desempeno.f1_macro_cv)}
+                </li>
+                <li>
+                  <strong>F1 prueba</strong> {fmt(seleccion.desempeno.f1_macro_prueba)}
+                </li>
+                <li>
+                  <strong>Exactitud</strong> {fmt(seleccion.desempeno.exactitud_prueba)}
+                </li>
+                <li>
+                  <strong>Recall@5</strong> {fmt(seleccion.desempeno.recall_at_5)}
+                </li>
+              </ul>
+            </article>
+          </div>
+        ) : null}
+        {seleccion?.herramientas?.length ? (
+          <div style={{ marginBottom: "1.1rem" }}>
+            <p className="subh">Herramientas para elegir el modelo</p>
+            <ul className="lista">
+              {seleccion.herramientas.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
         {meta?.metricas_referencia ? (
           <div className="metric-grid">
             {[
