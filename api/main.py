@@ -413,9 +413,23 @@ if STATIC_DIR.exists():
     if assets.exists():
         app.mount("/_next", StaticFiles(directory=assets), name="next_assets")
 
+    logos = STATIC_DIR / "logos"
+    if logos.exists():
+        app.mount("/logos", StaticFiles(directory=logos), name="logos")
+
     @app.get("/")
     def index():
         index_file = STATIC_DIR / "index.html"
         if not index_file.exists():
             raise HTTPException(404, "Falta el build de la interfaz (static/index.html).")
         return FileResponse(index_file)
+
+    @app.get("/{nombre_archivo}")
+    def estatico_raiz(nombre_archivo: str):
+        """favicon, robots, etc. del export de Next (no pisa /api/*)."""
+        if nombre_archivo.startswith("api"):
+            raise HTTPException(404)
+        candidato = STATIC_DIR / nombre_archivo
+        if candidato.is_file():
+            return FileResponse(candidato)
+        raise HTTPException(404)

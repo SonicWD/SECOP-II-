@@ -5,6 +5,9 @@ const staticExport = process.env.STATIC_EXPORT === "1";
 
 const nextConfig: NextConfig = {
   ...(staticExport ? { output: "export" as const } : {}),
+  images: {
+    unoptimized: true,
+  },
   async rewrites() {
     if (staticExport) return [];
     return [
