@@ -7,7 +7,12 @@ const nextConfig: NextConfig = {
   ...(staticExport ? { output: "export" as const } : {}),
   async rewrites() {
     if (staticExport) return [];
-    return [{ source: "/api/:path*", destination: `${api}/api/:path*` }];
+    return [
+      { source: "/api/:path*", destination: `${api}/api/:path*` },
+      { source: "/docs", destination: `${api}/docs` },
+      { source: "/docs/:path*", destination: `${api}/docs/:path*` },
+      { source: "/openapi.json", destination: `${api}/openapi.json` },
+    ];
   },
 };
 

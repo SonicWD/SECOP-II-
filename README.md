@@ -49,9 +49,20 @@ Las rutas `/api/*` se reescriben hacia la API (`API_URL`, por defecto `http://12
 | Método | Ruta | Uso |
 | --- | --- | --- |
 | GET | `/api/health` | Estado del modelo |
-| GET | `/api/meta` | Metadatos y métricas de referencia |
-| POST | `/api/clasificar` | `{ "texto": "..." }` → segmento UNSPSC |
-| POST | `/api/buscar` | `{ "consulta": "..." }` → top-5 vecinos |
+| GET | `/api/meta` | Metadatos, muestra, línea del curso |
+| GET | `/api/resultados` | Comparación de 7 modelos + F1 por clase |
+| GET | `/api/ejemplos` | Textos de demo |
+| GET | `/api/pipeline` | Pipeline, problemas/soluciones |
+| GET | `/api/segmentos` | Catálogo UNSPSC del modelo |
+| POST | `/api/clasificar` | Segmento + ranking + términos TF-IDF×coef |
+| POST | `/api/buscar` | Top-5 vecinos por coseno |
+| POST | `/api/limpiar` | Vista de preprocesamiento (REA1) |
+| GET | `/docs` | OpenAPI (Swagger) |
+
+## Interfaz
+
+Navegación: Demo · Problema · Fuente · Pipeline · Resultados · Problemas · Curso.  
+La demo clasifica, busca y muestra limpieza; los resultados salen de `api/data/resultados.json` (corrida de la propuesta).
 
 ## Resultados de referencia
 

@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
-const EJEMPLO =
-  "Prestación de servicios profesionales de apoyo a la gestión para el mantenimiento preventivo y correctivo de equipos de cómputo e impresoras en las sedes de la entidad.";
-
+type Ejemplo = { id: string; titulo: string; texto: string };
 type Ranking = { codigo: string; nombre: string; probabilidad: number | null };
+type Termino = { termino: string; tfidf: number; aporte: number };
 type Vecino = {
   rango: number;
   segmento: string;
@@ -16,13 +15,40 @@ type Vecino = {
 };
 
 export function Consola() {
-  const [tab, setTab] = useState<"clasificar" | "buscar">("clasificar");
-  const [texto, setTexto] = useState(EJEMPLO);
+  const [tab, setTab] = useState<"clasificar" | "buscar" | "limpiar">("clasificar");
+  const [texto, setTexto] = useState("");
+  const [ejemplos, setEjemplos] = useState<Ejemplo[]>([]);
   const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pred, setPred] = useState<{ segmento: string; nombre: string; ranking: Ranking[] } | null>(null);
+  const [pred, setPred] = useState<{
+    segmento: string;
+    nombre: string;
+    ranking: Ranking[];
+    terminos_clave: Termino[];
+  } | null>(null);
   const [vecinos, setVecinos] = useState<Vecino[] | null>(null);
+  const [limpieza, setLimpieza] = useState<{
+    limpio: string;
+    caracteres: number;
+    tokens_aprox: number;
+    urls_retiradas: number;
+    apto_modelo: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/ejemplos")
+      .then((r) => r.json())
+      .then((d) => {
+        setEjemplos(d.ejemplos || []);
+        if (d.ejemplos?.[0]) setTexto(d.ejemplos[0].texto);
+      })
+      .catch(() => {
+        const fallback =
+          "Prestación de servicios profesionales de apoyo a la gestión para el mantenimiento preventivo y correctivo de equipos de cómputo e impresoras en las sedes de la entidad.";
+        setTexto(fallback);
+      });
+  }, []);
 
   const corto = texto.trim().length > 0 && texto.trim().length < 20;
   const invalido = touched && corto;
@@ -31,6 +57,7 @@ export function Consola() {
     setTouched(true);
     setError(null);
     setVecinos(null);
+    setLimpieza(null);
     if (texto.trim().length < 20) {
       setError("Escribe al menos 20 caracteres del objeto contractual.");
       return;
@@ -40,11 +67,11 @@ export function Consola() {
       const res = await fetch("/api/clasificar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto: texto.trim(), top_k: 5 }),
+        body: JSON.stringify({ texto: texto.trim(), top_k: 5, explicar: true }),
       });
       if (!res.ok) {
         const detail = await res.json().catch(() => ({}));
-        throw new Error(detail.detail || "No se pudo clasificar.");
+        throw new Error(typeof detail.detail === "string" ? detail.detail : "No se pudo clasificar.");
       }
       setPred(await res.json());
     } catch (e) {
@@ -59,6 +86,7 @@ export function Consola() {
     setTouched(true);
     setError(null);
     setPred(null);
+    setLimpieza(null);
     if (texto.trim().length < 20) {
       setError("Escribe al menos 20 caracteres para buscar.");
       return;
@@ -72,7 +100,7 @@ export function Consola() {
       });
       if (!res.ok) {
         const detail = await res.json().catch(() => ({}));
-        throw new Error(detail.detail || "No se pudo buscar.");
+        throw new Error(typeof detail.detail === "string" ? detail.detail : "No se pudo buscar.");
       }
       const data = await res.json();
       setVecinos(data.vecinos);
@@ -84,30 +112,80 @@ export function Consola() {
     }
   }
 
+  async function limpiar() {
+    setTouched(true);
+    setError(null);
+    setPred(null);
+    setVecinos(null);
+    setLoading(true);
+    try {
+      const res = await fetch("/api/limpiar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texto }),
+      });
+      if (!res.ok) throw new Error("No se pudo limpiar el texto.");
+      setLimpieza(await res.json());
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Error de red.");
+      setLimpieza(null);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function run() {
+    if (tab === "clasificar") return clasificar();
+    if (tab === "buscar") return buscar();
+    return limpiar();
+  }
+
   return (
-    <section className="panel" aria-labelledby="consola-titulo">
-      <h2 id="consola-titulo" style={{ fontSize: "1.25rem", marginBottom: "0.75rem" }}>
-        Probar el modelo
-      </h2>
+    <section className="panel" id="demo" aria-labelledby="consola-titulo">
+      <h2 id="consola-titulo">Probar el modelo</h2>
+      <p className="lead">
+        Clasificación UNSPSC, búsqueda por coseno y vista de limpieza (pipeline de la clase).
+      </p>
+
+      {ejemplos.length > 0 ? (
+        <div className="chips" role="list" aria-label="Ejemplos">
+          {ejemplos.map((ej) => (
+            <button
+              key={ej.id}
+              type="button"
+              className="chip"
+              role="listitem"
+              onClick={() => {
+                setTexto(ej.texto);
+                setTouched(false);
+                setError(null);
+              }}
+            >
+              {ej.titulo}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <div className="tabs" role="tablist" aria-label="Modo">
-        <button
-          type="button"
-          className="tab"
-          role="tab"
-          aria-selected={tab === "clasificar"}
-          onClick={() => setTab("clasificar")}
-        >
-          Clasificar
-        </button>
-        <button
-          type="button"
-          className="tab"
-          role="tab"
-          aria-selected={tab === "buscar"}
-          onClick={() => setTab("buscar")}
-        >
-          Buscar
-        </button>
+        {(
+          [
+            ["clasificar", "Clasificar"],
+            ["buscar", "Buscar"],
+            ["limpiar", "Limpiar texto"],
+          ] as const
+        ).map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            className="tab"
+            role="tab"
+            aria-selected={tab === id}
+            onClick={() => setTab(id)}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       <label htmlFor="objeto">Texto del proceso</label>
@@ -123,8 +201,8 @@ export function Consola() {
         aria-describedby={invalido ? "objeto-error" : "objeto-hint"}
         placeholder="Nombre y descripción del proceso de contratación…"
       />
-      <p id="objeto-hint" className="hint" style={{ marginTop: "0.5rem" }}>
-        Mínimo 20 caracteres. El código UNSPSC no se escribe aquí: el modelo lo predice.
+      <p id="objeto-hint" className="hint">
+        Mínimo 20 caracteres. El código UNSPSC no se escribe: el modelo lo predice.
       </p>
       {invalido ? (
         <p id="objeto-error" className="error" role="alert">
@@ -133,24 +211,14 @@ export function Consola() {
       ) : null}
 
       <div className="acciones">
-        <button
-          type="button"
-          className="btn"
-          disabled={loading}
-          onClick={() => (tab === "clasificar" ? clasificar() : buscar())}
-        >
-          {loading ? "Procesando…" : tab === "clasificar" ? "Clasificar segmento" : "Buscar similares"}
-        </button>
-        <button
-          type="button"
-          className="btn btn-ghost"
-          onClick={() => {
-            setTexto(EJEMPLO);
-            setTouched(false);
-            setError(null);
-          }}
-        >
-          Restaurar ejemplo
+        <button type="button" className="btn" disabled={loading} onClick={() => void run()}>
+          {loading
+            ? "Procesando…"
+            : tab === "clasificar"
+              ? "Clasificar segmento"
+              : tab === "buscar"
+                ? "Buscar similares"
+                : "Ver limpieza"}
         </button>
       </div>
 
@@ -192,6 +260,18 @@ export function Consola() {
                 ))}
               </tbody>
             </table>
+            {pred.terminos_clave?.length ? (
+              <>
+                <h3 className="subh">Términos que empujan la clase (TF-IDF × coeficiente)</h3>
+                <div className="chips">
+                  {pred.terminos_clave.map((t) => (
+                    <span key={t.termino} className="chip chip-static" title={`aporte ${t.aporte}`}>
+                      {t.termino} · {t.aporte.toFixed(3)}
+                    </span>
+                  ))}
+                </div>
+              </>
+            ) : null}
           </motion.div>
         ) : null}
 
@@ -212,6 +292,38 @@ export function Consola() {
                 <p>{v.extracto}…</p>
               </article>
             ))}
+          </motion.div>
+        ) : null}
+
+        {limpieza ? (
+          <motion.div
+            key="lim"
+            className="resultado"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            <dl className="meta grid-4">
+              <div>
+                <dt>Caracteres</dt>
+                <dd>{limpieza.caracteres}</dd>
+              </div>
+              <div>
+                <dt>Tokens ≈</dt>
+                <dd>{limpieza.tokens_aprox}</dd>
+              </div>
+              <div>
+                <dt>URLs quitadas</dt>
+                <dd>{limpieza.urls_retiradas}</dd>
+              </div>
+              <div>
+                <dt>Apto modelo</dt>
+                <dd>{limpieza.apto_modelo ? "Sí" : "No"}</dd>
+              </div>
+            </dl>
+            <p className="hint">Texto limpio</p>
+            <p className="vecino">{limpieza.limpio}</p>
           </motion.div>
         ) : null}
       </AnimatePresence>
