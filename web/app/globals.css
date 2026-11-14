@@ -348,19 +348,19 @@ a:hover {
 }
 
 .stat:nth-child(1) {
-  background: linear-gradient(160deg, var(--accent), var(--card));
+  background: var(--accent);
   border-color: rgb(180 83 9 / 0.25);
 }
 .stat:nth-child(2) {
-  background: linear-gradient(160deg, var(--secondary), var(--card));
+  background: var(--secondary);
   border-color: rgb(155 44 44 / 0.2);
 }
 .stat:nth-child(3) {
-  background: linear-gradient(160deg, var(--muted), var(--card));
+  background: var(--muted);
   border-color: var(--border);
 }
 .stat:nth-child(4) {
-  background: linear-gradient(160deg, #fde8e8, var(--card));
+  background: #fde8e8;
   border-color: rgb(185 28 28 / 0.2);
 }
 
@@ -461,7 +461,7 @@ a:hover {
 
 /* Tintas de la paleta */
 .tile-vino {
-  background: linear-gradient(145deg, #9b2c2c, #7f1d1d);
+  background: var(--primary);
   color: #fff;
   border-color: #7f1d1d;
 }
@@ -474,7 +474,7 @@ a:hover {
 }
 
 .tile-ambar {
-  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  background: var(--accent);
   color: #7f1d1d;
   border-color: rgb(180 83 9 / 0.3);
 }
@@ -490,7 +490,7 @@ a:hover {
 }
 
 .tile-miel {
-  background: linear-gradient(145deg, #fdf2d6, #f5e8d2);
+  background: var(--secondary);
   color: #805500;
   border-color: rgb(128 85 0 / 0.2);
 }
@@ -506,7 +506,7 @@ a:hover {
 }
 
 .tile-piedra {
-  background: linear-gradient(145deg, #44403c, #292524);
+  background: #292524;
   color: #f5f5f4;
   border-color: #44403c;
 }
@@ -731,7 +731,7 @@ textarea:user-invalid {
   align-items: center;
   gap: 0.5rem;
   border: 1px solid rgb(155 44 44 / 0.2);
-  background: linear-gradient(135deg, var(--accent), var(--secondary));
+  background: var(--accent);
   color: var(--accent-foreground);
   border-radius: 999px;
   padding: 0.55rem 0.95rem;
@@ -852,18 +852,18 @@ textarea:user-invalid {
 }
 
 .paso-color-1 {
-  background: linear-gradient(145deg, #9b2c2c, #7f1d1d);
+  background: var(--primary);
   color: #fff;
 }
 
 .paso-color-2 {
-  background: linear-gradient(145deg, #fef3c7, #fbbf24);
+  background: var(--accent);
   color: #7f1d1d;
 }
 
 .paso-color-3 {
-  background: linear-gradient(145deg, #fdf2d6, #b45309);
-  color: #1a1a1a;
+  background: var(--secondary);
+  color: #805500;
 }
 
 .paso:hover {
@@ -893,7 +893,7 @@ textarea:user-invalid {
 
 .paso-color-3 span,
 .paso-color-3 strong {
-  color: #1a1a1a;
+  color: #805500;
 }
 
 .paso strong {
@@ -998,7 +998,7 @@ textarea:user-invalid {
 }
 
 .card.tile-vino {
-  background: linear-gradient(145deg, #9b2c2c, #7f1d1d);
+  background: var(--primary);
   color: #fff;
 }
 
@@ -1008,7 +1008,7 @@ textarea:user-invalid {
 }
 
 .card.tile-ambar {
-  background: linear-gradient(145deg, #fef3c7, #fde68a);
+  background: var(--accent);
   color: #7f1d1d;
 }
 
@@ -1018,7 +1018,7 @@ textarea:user-invalid {
 }
 
 .card.tile-miel {
-  background: linear-gradient(145deg, #fdf2d6, #f5e8d2);
+  background: var(--secondary);
   color: #805500;
 }
 
@@ -1028,7 +1028,7 @@ textarea:user-invalid {
 }
 
 .card.tile-piedra {
-  background: linear-gradient(145deg, #44403c, #292524);
+  background: #292524;
   color: #f5f5f4;
 }
 
