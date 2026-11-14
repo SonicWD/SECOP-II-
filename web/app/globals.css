@@ -176,25 +176,50 @@ a:hover {
   gap: 0.2rem 0.55rem;
 }
 
-.nav-links a {
+.nav-link {
+  position: relative;
   color: var(--apagado);
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 550;
-  padding: 0.45rem 0.5rem;
+  padding: 0.45rem 0.55rem 0.55rem;
   min-block-size: 44px;
   display: inline-flex;
   align-items: center;
-  border-radius: 999px;
+  border-radius: 8px;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.nav-links a:hover {
+.nav-link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0.45rem;
+  inset-block-end: 0.2rem;
+  block-size: 3px;
+  border-radius: 999px;
+  background: transparent;
+  transform: scaleX(0.35);
+  opacity: 0;
+  transition: background-color 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
   color: var(--negro);
   background: var(--verde-suave);
 }
 
-.nav-links a:focus-visible {
+.nav-link.is-active {
+  color: var(--negro);
+  font-weight: 650;
+}
+
+.nav-link.is-active::after {
+  background: linear-gradient(90deg, var(--verde), var(--rosa));
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.nav-link:focus-visible {
   outline: 2px solid var(--foco);
   outline-offset: 2px;
 }
