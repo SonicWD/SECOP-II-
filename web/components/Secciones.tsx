@@ -30,6 +30,8 @@ type PipelineData = {
   problemas: { problema: string; solucion: string }[];
 };
 
+const TINTAS = ["tile-verde", "tile-rosa", "tile-violeta", "tile-negro"] as const;
+
 function fmt(n: number | null | undefined, d = 3) {
   if (n == null) return "—";
   return n.toFixed(d).replace(".", ",");
@@ -56,33 +58,36 @@ export function Secciones() {
 
   return (
     <>
-      <section className="panel" id="problema" aria-labelledby="problema-titulo">
+      <section className="panel panel-rosa" id="problema" aria-labelledby="problema-titulo">
         <h2 id="problema-titulo">Problemática y solución</h2>
         <div className="dos">
-          <div>
-            <h3 className="subh">Problemática</h3>
+          <article className="tile tile-rosa">
+            <h3 className="tile-label">Problemática</h3>
             <p>
               SECOP II publica millones de procesos en texto libre. Quien busca un bien o
               servicio rara vez conoce el código UNSPSC. La búsqueda por palabras sueltas
               mezcla obras, suministros y servicios que comparten los mismos verbos.
             </p>
-          </div>
-          <div>
-            <h3 className="subh">Solución</h3>
+          </article>
+          <article className="tile tile-verde">
+            <h3 className="tile-label">Solución</h3>
             <p>
               Clasificar el segmento UNSPSC desde el nombre y la descripción, medir con F1
               macro, y recuperar vecinos por distancia de coseno sobre el mismo TF-IDF. El
               código no entra como variable (sin leakage).
             </p>
-          </div>
+          </article>
         </div>
       </section>
 
-      <section className="panel" id="fuente" aria-labelledby="fuente-titulo">
+      <section className="panel panel-violeta" id="fuente" aria-labelledby="fuente-titulo">
         <h2 id="fuente-titulo">Fuente de información</h2>
         <p>
           <a
-            href={meta?.fuente || "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos-de-Contrataci-n/p6dx-8zbt"}
+            href={
+              meta?.fuente ||
+              "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos-de-Contrataci-n/p6dx-8zbt"
+            }
             target="_blank"
             rel="noreferrer"
           >
@@ -91,66 +96,61 @@ export function Secciones() {
           (datos.gov.co, p6dx-8zbt). API SODA pública, sin token.
         </p>
         {meta?.muestra ? (
-          <dl className="meta grid-4" style={{ marginTop: "1rem" }}>
-            <div>
-              <dt>Descargadas</dt>
-              <dd>{meta.muestra.filas_descargadas?.toLocaleString("es-CO") ?? "—"}</dd>
-            </div>
-            <div>
-              <dt>Modeladas</dt>
-              <dd>{meta.muestra.filas_modelo?.toLocaleString("es-CO") ?? "—"}</dd>
-            </div>
-            <div>
-              <dt>Clases</dt>
-              <dd>{meta.muestra.n_clases ?? "—"}</dd>
-            </div>
-            <div>
-              <dt>Vocabulario</dt>
-              <dd>{meta.muestra.vocabulario?.toLocaleString("es-CO") ?? "—"}</dd>
-            </div>
-          </dl>
+          <div className="metric-grid">
+            {[
+              ["Descargadas", meta.muestra.filas_descargadas?.toLocaleString("es-CO")],
+              ["Modeladas", meta.muestra.filas_modelo?.toLocaleString("es-CO")],
+              ["Clases", String(meta.muestra.n_clases ?? "—")],
+              ["Vocabulario", meta.muestra.vocabulario?.toLocaleString("es-CO")],
+            ].map(([lab, val], i) => (
+              <div key={lab} className={`metric-chip ${TINTAS[i % TINTAS.length]}`}>
+                <span className="metric-chip-lab">{lab}</span>
+                <span className="metric-chip-val">{val ?? "—"}</span>
+              </div>
+            ))}
+          </div>
         ) : null}
       </section>
 
-      <section className="panel" id="pipeline" aria-labelledby="pipeline-titulo">
+      <section className="panel panel-verde" id="pipeline" aria-labelledby="pipeline-titulo">
         <h2 id="pipeline-titulo">Pipeline</h2>
         <div className="pipeline">
-          {(pipe?.pipeline || []).map((p) => (
-            <div className="paso" key={p.paso} title={p.detalle}>
+          {(pipe?.pipeline || []).map((p, i) => (
+            <div
+              className={`paso paso-color-${(i % 3) + 1}`}
+              key={p.paso}
+              title={p.detalle}
+            >
               <span>{String(p.paso).padStart(2, "0")}</span>
               <strong>{p.nombre}</strong>
             </div>
           ))}
         </div>
         <p className="hint" style={{ marginTop: "1rem" }}>
-          {meta?.criterio || "El F1 macro de validación cruzada decide el modelo; la prueba solo informa."}
+          {meta?.criterio ||
+            "El F1 macro de validación cruzada decide el modelo; la prueba solo informa."}
         </p>
       </section>
 
-      <section className="panel" id="resultados" aria-labelledby="resultados-titulo">
+      <section className="panel panel-rosa" id="resultados" aria-labelledby="resultados-titulo">
         <h2 id="resultados-titulo">Resultados obtenidos</h2>
         {meta?.metricas_referencia ? (
-          <dl className="meta grid-4" style={{ marginBottom: "1.25rem" }}>
-            <div>
-              <dt>F1 macro prueba</dt>
-              <dd>{fmt(meta.metricas_referencia.f1_macro_prueba)}</dd>
-            </div>
-            <div>
-              <dt>Exactitud</dt>
-              <dd>{fmt(meta.metricas_referencia.exactitud_prueba)}</dd>
-            </div>
-            <div>
-              <dt>Recall@5</dt>
-              <dd>{fmt(meta.metricas_referencia.recall_at_5)}</dd>
-            </div>
-            <div>
-              <dt>MRR@5</dt>
-              <dd>{fmt(meta.metricas_referencia.mrr_at_5)}</dd>
-            </div>
-          </dl>
+          <div className="metric-grid">
+            {[
+              ["F1 macro prueba", fmt(meta.metricas_referencia.f1_macro_prueba)],
+              ["Exactitud", fmt(meta.metricas_referencia.exactitud_prueba)],
+              ["Recall@5", fmt(meta.metricas_referencia.recall_at_5)],
+              ["MRR@5", fmt(meta.metricas_referencia.mrr_at_5)],
+            ].map(([lab, val], i) => (
+              <div key={lab} className={`metric-chip ${TINTAS[i % TINTAS.length]}`}>
+                <span className="metric-chip-lab">{lab}</span>
+                <span className="metric-chip-val">{val}</span>
+              </div>
+            ))}
+          </div>
         ) : null}
         {res?.modelos?.length ? (
-          <div className="tabla-wrap">
+          <div className="tabla-wrap" style={{ marginTop: "1.1rem" }}>
             <table className="tabla">
               <thead>
                 <tr>
@@ -177,8 +177,8 @@ export function Secciones() {
           </div>
         ) : null}
         <div className="dos" style={{ marginTop: "1.25rem" }}>
-          <div>
-            <h3 className="subh">Mejores F1 por segmento</h3>
+          <article className="tile tile-verde">
+            <h3 className="tile-label">Mejores F1</h3>
             <ul className="lista">
               {(res?.por_clase_mejores || []).map((c) => (
                 <li key={c.segmento}>
@@ -186,9 +186,9 @@ export function Secciones() {
                 </li>
               ))}
             </ul>
-          </div>
-          <div>
-            <h3 className="subh">Peores F1 por segmento</h3>
+          </article>
+          <article className="tile tile-rosa">
+            <h3 className="tile-label">Peores F1</h3>
             <ul className="lista">
               {(res?.por_clase_peores || []).map((c) => (
                 <li key={c.segmento}>
@@ -196,32 +196,32 @@ export function Secciones() {
                 </li>
               ))}
             </ul>
-          </div>
+          </article>
         </div>
       </section>
 
-      <section className="panel" id="problemas" aria-labelledby="problemas-titulo">
+      <section className="panel panel-violeta" id="problemas" aria-labelledby="problemas-titulo">
         <h2 id="problemas-titulo">Problemas y soluciones</h2>
         <div className="cards">
-          {(pipe?.problemas || []).map((p) => (
-            <article className="card" key={p.problema}>
-              <h3 className="subh">{p.problema}</h3>
+          {(pipe?.problemas || []).map((p, i) => (
+            <article className={`card ${TINTAS[i % 3]}`} key={p.problema}>
+              <h3 className="tile-label">{p.problema}</h3>
               <p>{p.solucion}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="panel" id="curso" aria-labelledby="curso-titulo">
+      <section className="panel panel-verde" id="curso" aria-labelledby="curso-titulo">
         <h2 id="curso-titulo">Línea de la asignatura</h2>
         <p className="lead">
           El proyecto final reutiliza lo visto en los REA anteriores: limpieza y TF-IDF,
           embeddings/LSA, pipeline reproducible y métricas honestas.
         </p>
         <div className="cards">
-          {(meta?.linea_curso || []).map((l) => (
-            <article className="card" key={l.rea}>
-              <h3 className="subh">{l.rea}</h3>
+          {(meta?.linea_curso || []).map((l, i) => (
+            <article className={`card ${TINTAS[i % TINTAS.length]}`} key={l.rea}>
+              <h3 className="tile-label">{l.rea}</h3>
               <p>{l.aporte}</p>
             </article>
           ))}

@@ -358,45 +358,153 @@ a:hover {
 }
 
 .panel {
-  border: 1px solid var(--linea);
+  border: 1px solid transparent;
   border-radius: var(--radio);
   background: var(--superficie);
-  padding: 1.4rem 1.45rem;
+  padding: 1.45rem 1.5rem;
   box-shadow: var(--sombra);
   animation: entra 0.45s ease both;
 }
 
 .panel-demo {
-  border-top: 3px solid var(--verde);
+  background:
+    linear-gradient(165deg, rgb(49 236 86 / 0.12), transparent 42%),
+    var(--blanco);
+  border: 1px solid rgb(49 236 86 / 0.35);
 }
 
-.stack .panel:nth-child(1) {
-  border-top: 3px solid var(--rosa);
-  animation-delay: 0.05s;
+.panel-rosa {
+  background:
+    linear-gradient(160deg, rgb(239 3 108 / 0.1), transparent 45%),
+    var(--blanco);
+  border: 1px solid rgb(239 3 108 / 0.28);
 }
-.stack .panel:nth-child(2) {
-  border-top: 3px solid var(--violeta);
-  animation-delay: 0.1s;
+
+.panel-violeta {
+  background:
+    linear-gradient(160deg, rgb(238 114 248 / 0.14), transparent 45%),
+    var(--blanco);
+  border: 1px solid rgb(238 114 248 / 0.35);
 }
-.stack .panel:nth-child(3) {
-  border-top: 3px solid var(--verde);
-  animation-delay: 0.15s;
+
+.panel-verde {
+  background:
+    linear-gradient(160deg, rgb(49 236 86 / 0.14), transparent 45%),
+    var(--blanco);
+  border: 1px solid rgb(49 236 86 / 0.35);
 }
-.stack .panel:nth-child(4) {
-  border-top: 3px solid var(--rosa);
-  animation-delay: 0.2s;
-}
-.stack .panel:nth-child(5) {
-  border-top: 3px solid var(--violeta);
-  animation-delay: 0.25s;
-}
-.stack .panel:nth-child(6) {
-  border-top: 3px solid var(--verde);
-  animation-delay: 0.3s;
+
+.stack .panel {
+  animation-delay: 0.06s;
 }
 
 .demo-cabecera {
   margin-block-end: 0.35rem;
+}
+
+.tile {
+  border-radius: var(--radio-chico);
+  padding: 1.1rem 1.15rem;
+  min-block-size: 100%;
+}
+
+.tile-label {
+  margin: 0 0 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 650;
+}
+
+.tile-verde {
+  background: linear-gradient(145deg, #31ec56 0%, #1fcf6a 100%);
+  color: var(--sobre-verde);
+}
+
+.tile-verde .tile-label,
+.tile-verde strong {
+  color: var(--sobre-verde);
+}
+
+.tile-verde p,
+.tile-verde .lista {
+  color: rgb(6 36 13 / 0.88);
+}
+
+.tile-rosa {
+  background: linear-gradient(145deg, #ef036c 0%, #c40158 100%);
+  color: #fff;
+}
+
+.tile-rosa .tile-label,
+.tile-rosa strong,
+.tile-rosa p,
+.tile-rosa .lista {
+  color: #fff;
+}
+
+.tile-violeta {
+  background: linear-gradient(145deg, #ee72f8 0%, #c84fd4 100%);
+  color: #1a0a1c;
+}
+
+.tile-violeta .tile-label,
+.tile-violeta strong {
+  color: #1a0a1c;
+}
+
+.tile-negro {
+  background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+  color: #fff;
+}
+
+.tile-negro .tile-label,
+.tile-negro strong,
+.tile-negro p {
+  color: #fff;
+}
+
+.metric-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-block-start: 1rem;
+}
+
+@media (min-width: 700px) {
+  .metric-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.metric-chip {
+  border-radius: var(--radio-chico);
+  padding: 0.85rem 0.95rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.metric-chip-lab {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.metric-chip-val {
+  font-family: var(--mono);
+  font-size: 1.2rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-chip.tile-verde,
+.metric-chip.tile-rosa,
+.metric-chip.tile-violeta,
+.metric-chip.tile-negro {
+  /* reutiliza fondos de tile-* */
 }
 
 .panel h2 {
@@ -690,31 +798,59 @@ textarea:user-invalid {
 }
 
 .paso {
-  border: 1px solid var(--linea);
+  border: 0;
   border-radius: var(--radio-chico);
-  background: var(--superficie-2);
   padding: 0.85rem;
   min-block-size: 5.5rem;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.paso-color-1 {
+  background: linear-gradient(145deg, #31ec56, #19c75a);
+  color: var(--sobre-verde);
+}
+
+.paso-color-2 {
+  background: linear-gradient(145deg, #ef036c, #c40158);
+  color: #fff;
+}
+
+.paso-color-3 {
+  background: linear-gradient(145deg, #ee72f8, #c84fd4);
+  color: #1a0a1c;
 }
 
 .paso:hover {
-  transform: translateY(-2px);
-  border-color: var(--verde);
+  transform: translateY(-3px);
+  filter: brightness(1.05);
 }
 
 .paso span {
   display: block;
   font-family: var(--mono);
   font-size: 0.7rem;
-  color: var(--rosa);
   letter-spacing: 0.08em;
   margin-block-end: 0.35rem;
   font-variant-numeric: tabular-nums;
+  opacity: 0.9;
+}
+
+.paso-color-1 span,
+.paso-color-1 strong {
+  color: var(--sobre-verde);
+}
+
+.paso-color-2 span,
+.paso-color-2 strong {
+  color: #fff;
+}
+
+.paso-color-3 span,
+.paso-color-3 strong {
+  color: #1a0a1c;
 }
 
 .paso strong {
-  color: var(--negro);
   font-size: 0.92rem;
   font-weight: 650;
   font-family: var(--fuente-texto), system-ui, sans-serif;
@@ -802,22 +938,62 @@ textarea:user-invalid {
 }
 
 .card {
-  border: 1px solid var(--linea);
+  border: 0;
   border-radius: var(--radio-chico);
-  background: var(--superficie-2);
-  padding: 1rem 1.05rem;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  padding: 1.05rem 1.1rem;
+  transition: transform 0.15s ease, filter 0.15s ease;
+  overflow-wrap: anywhere;
 }
 
 .card:hover {
-  border-color: var(--violeta);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  filter: brightness(1.04);
+}
+
+.card.tile-verde {
+  background: linear-gradient(145deg, #31ec56, #1fcf6a);
+  color: var(--sobre-verde);
+}
+
+.card.tile-verde .tile-label,
+.card.tile-verde p {
+  color: var(--sobre-verde);
+}
+
+.card.tile-rosa {
+  background: linear-gradient(145deg, #ef036c, #c40158);
+  color: #fff;
+}
+
+.card.tile-rosa .tile-label,
+.card.tile-rosa p {
+  color: #fff;
+}
+
+.card.tile-violeta {
+  background: linear-gradient(145deg, #ee72f8, #c84fd4);
+  color: #1a0a1c;
+}
+
+.card.tile-violeta .tile-label,
+.card.tile-violeta p {
+  color: #1a0a1c;
+}
+
+.card.tile-negro {
+  background: linear-gradient(145deg, #222, #0a0a0a);
+  color: #fff;
+}
+
+.card.tile-negro .tile-label,
+.card.tile-negro p {
+  color: #f5f5f5;
 }
 
 .card p {
-  color: var(--apagado);
   font-size: 0.95rem;
-  overflow-wrap: anywhere;
+  margin: 0;
+  opacity: 0.95;
 }
 
 .lista {
