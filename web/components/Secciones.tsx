@@ -30,7 +30,7 @@ type PipelineData = {
   problemas: { problema: string; solucion: string }[];
 };
 
-const TINTAS = ["tile-verde", "tile-rosa", "tile-violeta", "tile-negro"] as const;
+const TINTAS = ["tile-vino", "tile-ambar", "tile-miel", "tile-piedra"] as const;
 
 function fmt(n: number | null | undefined, d = 3) {
   if (n == null) return "—";
@@ -58,10 +58,10 @@ export function Secciones() {
 
   return (
     <>
-      <section className="panel panel-rosa" id="problema" aria-labelledby="problema-titulo">
+      <section className="panel panel-vino" id="problema" aria-labelledby="problema-titulo">
         <h2 id="problema-titulo">Problemática y solución</h2>
         <div className="dos">
-          <article className="tile tile-rosa">
+          <article className="tile tile-vino">
             <h3 className="tile-label">Problemática</h3>
             <p>
               SECOP II publica millones de procesos en texto libre. Quien busca un bien o
@@ -69,7 +69,7 @@ export function Secciones() {
               mezcla obras, suministros y servicios que comparten los mismos verbos.
             </p>
           </article>
-          <article className="tile tile-verde">
+          <article className="tile tile-ambar">
             <h3 className="tile-label">Solución</h3>
             <p>
               Clasificar el segmento UNSPSC desde el nombre y la descripción, medir con F1
@@ -80,7 +80,7 @@ export function Secciones() {
         </div>
       </section>
 
-      <section className="panel panel-violeta" id="fuente" aria-labelledby="fuente-titulo">
+      <section className="panel panel-miel" id="fuente" aria-labelledby="fuente-titulo">
         <h2 id="fuente-titulo">Fuente de información</h2>
         <p>
           <a
@@ -112,7 +112,7 @@ export function Secciones() {
         ) : null}
       </section>
 
-      <section className="panel panel-verde" id="pipeline" aria-labelledby="pipeline-titulo">
+      <section className="panel panel-ambar" id="pipeline" aria-labelledby="pipeline-titulo">
         <h2 id="pipeline-titulo">Pipeline</h2>
         <div className="pipeline">
           {(pipe?.pipeline || []).map((p, i) => (
@@ -132,7 +132,7 @@ export function Secciones() {
         </p>
       </section>
 
-      <section className="panel panel-rosa" id="resultados" aria-labelledby="resultados-titulo">
+      <section className="panel panel-vino" id="resultados" aria-labelledby="resultados-titulo">
         <h2 id="resultados-titulo">Resultados obtenidos</h2>
         {meta?.metricas_referencia ? (
           <div className="metric-grid">
@@ -177,7 +177,7 @@ export function Secciones() {
           </div>
         ) : null}
         <div className="dos" style={{ marginTop: "1.25rem" }}>
-          <article className="tile tile-verde">
+          <article className="tile tile-ambar">
             <h3 className="tile-label">Mejores F1</h3>
             <ul className="lista">
               {(res?.por_clase_mejores || []).map((c) => (
@@ -187,7 +187,7 @@ export function Secciones() {
               ))}
             </ul>
           </article>
-          <article className="tile tile-rosa">
+          <article className="tile tile-vino">
             <h3 className="tile-label">Peores F1</h3>
             <ul className="lista">
               {(res?.por_clase_peores || []).map((c) => (
@@ -200,7 +200,7 @@ export function Secciones() {
         </div>
       </section>
 
-      <section className="panel panel-violeta" id="problemas" aria-labelledby="problemas-titulo">
+      <section className="panel panel-miel" id="problemas" aria-labelledby="problemas-titulo">
         <h2 id="problemas-titulo">Problemas y soluciones</h2>
         <div className="cards">
           {(pipe?.problemas || []).map((p, i) => (
@@ -212,7 +212,7 @@ export function Secciones() {
         </div>
       </section>
 
-      <section className="panel panel-verde" id="curso" aria-labelledby="curso-titulo">
+      <section className="panel panel-ambar" id="curso" aria-labelledby="curso-titulo">
         <h2 id="curso-titulo">Línea de la asignatura</h2>
         <p className="lead">
           El proyecto final reutiliza lo visto en los REA anteriores: limpieza y TF-IDF,

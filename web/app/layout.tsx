@@ -1,15 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { IBM_Plex_Mono, Libre_Baskerville, Poppins } from "next/font/google";
 import "./globals.css";
 
-const display = Source_Serif_4({
+const display = Libre_Baskerville({
   subsets: ["latin"],
+  weight: ["400", "700"],
   variable: "--fuente-display",
   display: "swap",
 });
 
-const sans = Source_Sans_3({
+const sans = Poppins({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--fuente-texto",
   display: "swap",
 });
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#eef2f6",
+  themeColor: "#faf7f5",
   colorScheme: "light",
 };
 
