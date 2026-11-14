@@ -12,54 +12,51 @@ export default function Home() {
       <Nav />
       <main className="shell" id="top">
         <header className="hero">
-          <div>
-            <div className="hero-marcas">
-              <Image
-                className="hero-logo"
-                src="/logos/udec-horizontal.png"
-                alt="Universidad de Cundinamarca"
-                width={220}
-                height={103}
-                priority
-              />
-              <Image
-                className="hero-escudo"
-                src="/logos/udec-escudo.png"
-                alt=""
-                width={56}
-                height={84}
-                aria-hidden
-              />
-            </div>
+          <div className="hero-copy">
+            <Image
+              className="hero-logo"
+              src="/logos/udec-horizontal.png"
+              alt="Universidad de Cundinamarca"
+              width={240}
+              height={112}
+              priority
+            />
             <p className="eyebrow">PLN · Proyecto final · Extensión Fusagasugá</p>
-            <h1>SECOP II — Clasificación y búsqueda</h1>
+            <h1>Clasifica y busca procesos de SECOP II</h1>
             <p>
-              Modelo en la nube con interfaz y API: asigna el segmento UNSPSC desde el
-              texto público y recupera procesos parecidos. Integra TF-IDF, validación
-              cruzada y búsqueda por coseno trabajados en la asignatura.
+              Interfaz y API en la nube: predice el segmento UNSPSC desde el texto público
+              y recupera contratos parecidos con TF-IDF y distancia de coseno.
             </p>
+            <div className="hero-cta">
+              <a className="btn" href="#demo">
+                Probar el modelo
+              </a>
+              <a className="btn btn-ghost" href="#resultados">
+                Ver resultados
+              </a>
+            </div>
           </div>
-          <dl className="meta">
-            <div>
-              <dt>F1 macro (prueba)</dt>
-              <dd>0,506</dd>
+          <aside className="hero-stats" aria-label="Métricas del modelo">
+            <div className="stat">
+              <span className="stat-val">0,506</span>
+              <span className="stat-label">F1 macro</span>
             </div>
-            <div>
-              <dt>Exactitud</dt>
-              <dd>0,561</dd>
+            <div className="stat">
+              <span className="stat-val">0,561</span>
+              <span className="stat-label">Exactitud</span>
             </div>
-            <div>
-              <dt>Recall@5</dt>
-              <dd>0,698</dd>
+            <div className="stat">
+              <span className="stat-val">0,698</span>
+              <span className="stat-label">Recall@5</span>
             </div>
-            <div>
-              <dt>Modelos comparados</dt>
-              <dd>7</dd>
+            <div className="stat">
+              <span className="stat-val">7</span>
+              <span className="stat-label">Modelos</span>
             </div>
-          </dl>
+          </aside>
         </header>
 
-        <div id="contenido">
+        <div id="contenido" className="contenido">
           <Consola />
           <div className="stack">
             <Secciones />
@@ -71,8 +68,8 @@ export default function Home() {
             <Image
               src="/logos/udec-escudo.png"
               alt=""
-              width={32}
-              height={48}
+              width={36}
+              height={54}
               aria-hidden
             />
             <p>
@@ -80,14 +77,12 @@ export default function Home() {
               Universidad de Cundinamarca
             </p>
           </div>
-          <p>
+          <p className="pie-links">
             <a href="https://github.com/SonicWD/SECOP-II-" rel="noreferrer" target="_blank">
               GitHub
             </a>
             {" · "}
             <a href="/api/health">API</a>
-            {" · "}
-            <a href="/api/meta">Meta</a>
             {" · "}
             <a href="/docs" target="_blank" rel="noreferrer">
               OpenAPI

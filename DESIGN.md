@@ -1,51 +1,32 @@
-# Sistema visual — SECOP II (identidad propia)
+# Sistema visual — SECOP II
 
-Diseño **distinto** del ODC de grado (que usa lienzo negro + verde `#00d992`).  
-Aquí la referencia es un tablero de **datos abiertos / contratación pública**: claro, papel, navy y cian.
+Identidad **propia**, distinta del ODC (negro + verde institucional).  
+Paleta viva inspirada en [3 Sided Cube](https://3sidedcube.com/): energía y contraste sobre blanco/negro.
 
 ## Color
 
-| Variable | Valor | Uso |
+| Token | Hex | Uso |
 | --- | --- | --- |
-| `--lienzo` | `#eef2f6` | Fondo de página |
-| `--superficie` | `#ffffff` | Paneles |
-| `--navy` | `#152b45` | Títulos, nav brand |
-| `--cian` | `#0e7490` | Acento, CTA, enlaces |
-| `--cian-suave` | `rgb(14 116 144 / 0.1)` | Fondos de acento |
-| `--ambar` | `#b45309` | Avisos |
-| `--rojo` | `#b91c1c` | Errores |
-| `--texto` | `#334155` | Cuerpo |
-| `--apagado` | `#64748b` | Secundario |
-| `--linea` | `#d0d7e2` | Bordes |
+| `--verde` | `#31EC56` malaquita | CTA secundaria, tabs activos, acentos |
+| `--rosa` | `#EF036C` razzmatazz | Enlaces, foco, métricas |
+| `--violeta` | `#EE72F8` heliotropo | Hover suave, chips de explicación |
+| `--negro` / `--blanco` | `#0A0A0A` / `#FFFFFF` | Contraste base |
 
-`color-scheme: light`. Sin sombras multicapa ni glow verde.
+Fondos claros (`#FAFAFA`) con manchas radiales de color, sin el look “terminal oscuro” del ODC.
 
-## Tipografía
+## Marca UDEC
 
-- **Source Serif 4** — títulos (tono informe / academia).
-- **Source Sans 3** — cuerpo y UI.
-- **IBM Plex Mono** — códigos UNSPSC y métricas (`tabular-nums`).
+- **Nav:** solo escudo limpio + “SECOP II” (sin repetir el wordmark).
+- **Hero:** solo logo horizontal limpio (incluye escudo lineal + UDEC).
+- **Pie:** escudo pequeño + créditos.
+- Logos con fondo transparente (`*-clean` aplicados sobre los PNG).
 
-## Forma
+## Tipografía y motion
 
-- Radio 10 px en paneles, 8 px en controles.
-- Bordes 1 px slate; sin cards con sombra pesada.
-- CTA sólido cian; secundarios outline navy.
+- Source Serif 4 (títulos) · Source Sans 3 (cuerpo) · IBM Plex Mono (códigos).
+- Entrada suave (`opacity` + `translateY`); hover en cards/pasos.
+- Respeta `prefers-reduced-motion`.
 
-## Marca institucional
+## Accesibilidad
 
-Logos oficiales copiados del ODC (`odc-web-v2/public/logos/`):
-
-- `udec-escudo.png` — nav, hero y pie
-- `udec-horizontal.png` — hero (versión para fondo claro)
-- `udec-horizontal-claro.png` — disponible si se usa fondo oscuro
-
-## Accesibilidad (Vercel Web Interface Guidelines)
-
-- Skip link a `#contenido`
-- `:focus-visible` en controles
-- Labels + `aria-invalid` / `aria-live`
-- `prefers-reduced-motion`
-- Áreas táctiles ≥ 44 px
-- `touch-action: manipulation`
-- Imágenes con `width`/`height`; escudo decorativo con `alt=""` + `aria-hidden`
+Skip link, `:focus-visible`, labels, `aria-live`, touch ≥ 44 px, `width`/`height` en imágenes.

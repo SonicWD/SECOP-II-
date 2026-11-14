@@ -20,15 +20,12 @@ export function Nav() {
           className="nav-escudo"
           src="/logos/udec-escudo.png"
           alt=""
-          width={28}
-          height={42}
+          width={30}
+          height={45}
           aria-hidden
         />
-        <span className="nav-brand-text">
-          <span className="nav-sigla">SECOP II</span>
-          <span className="nav-inst">Universidad de Cundinamarca</span>
-        </span>
-        <span className="solo-lector">Ir al inicio · Universidad de Cundinamarca</span>
+        <span className="nav-sigla">SECOP II</span>
+        <span className="solo-lector">Inicio · Universidad de Cundinamarca</span>
       </a>
       <div className="nav-links">
         {LINKS.map((l) => (

@@ -143,11 +143,14 @@ export function Consola() {
   }
 
   return (
-    <section className="panel" id="demo" aria-labelledby="consola-titulo">
-      <h2 id="consola-titulo">Probar el modelo</h2>
-      <p className="lead">
-        Clasificación UNSPSC, búsqueda por coseno y vista de limpieza (pipeline de la clase).
-      </p>
+    <section className="panel panel-demo" id="demo" aria-labelledby="consola-titulo">
+      <div className="demo-cabecera">
+        <h2 id="consola-titulo">Probar el modelo</h2>
+        <p className="lead">
+          Clasificación UNSPSC, búsqueda por coseno y limpieza de texto — misma lógica de la
+          propuesta.
+        </p>
+      </div>
 
       {ejemplos.length > 0 ? (
         <div className="chips" role="list" aria-label="Ejemplos">
