@@ -10,10 +10,13 @@ import joblib
 import numpy as np
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 BASE = Path(__file__).resolve().parent
 MODEL_PATH = Path(os.getenv("MODEL_PATH", str(BASE / "artifacts" / "modelo.joblib")))
+STATIC_DIR = Path(os.getenv("STATIC_DIR", str(BASE / "static")))
 
 app = FastAPI(
     title="SECOP II · Clasificación y búsqueda",
@@ -150,3 +153,17 @@ def buscar(body: BuscarIn):
             "extracto": str(textos[i])[:320],
         })
     return {"vecinos": vecinos}
+
+
+# Interfaz estática (build de Next) en el mismo origen que la API.
+if STATIC_DIR.exists():
+    assets = STATIC_DIR / "_next"
+    if assets.exists():
+        app.mount("/_next", StaticFiles(directory=assets), name="next_assets")
+
+    @app.get("/")
+    def index():
+        index_file = STATIC_DIR / "index.html"
+        if not index_file.exists():
+            raise HTTPException(404, "Falta el build de la interfaz (static/index.html).")
+        return FileResponse(index_file)

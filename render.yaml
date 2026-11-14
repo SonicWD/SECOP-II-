@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: secop-ii
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: MODEL_PATH
+        value: /app/artifacts/modelo.joblib
+      - key: STATIC_DIR
+        value: /app/static
