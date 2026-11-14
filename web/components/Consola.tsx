@@ -60,6 +60,7 @@ export function Consola() {
     setLimpieza(null);
     if (texto.trim().length < 20) {
       setError("Escribe al menos 20 caracteres del objeto contractual.");
+      queueMicrotask(() => document.getElementById("objeto")?.focus());
       return;
     }
     setLoading(true);
@@ -89,6 +90,7 @@ export function Consola() {
     setLimpieza(null);
     if (texto.trim().length < 20) {
       setError("Escribe al menos 20 caracteres para buscar.");
+      queueMicrotask(() => document.getElementById("objeto")?.focus());
       return;
     }
     setLoading(true);
@@ -197,9 +199,11 @@ export function Consola() {
         onBlur={() => setTouched(true)}
         required
         minLength={20}
+        autoComplete="off"
+        spellCheck={true}
         aria-invalid={invalido || undefined}
         aria-describedby={invalido ? "objeto-error" : "objeto-hint"}
-        placeholder="Nombre y descripción del proceso de contratación…"
+        placeholder="Ej.: suministro de medicamentos para la red hospitalaria…"
       />
       <p id="objeto-hint" className="hint">
         Mínimo 20 caracteres. El código UNSPSC no se escribe: el modelo lo predice.
