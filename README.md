@@ -61,10 +61,18 @@ Las rutas `/api/*` se reescriben hacia la API (`API_URL`, por defecto `http://12
 
 ## Despliegue en la nube
 
-1. Publicar este repositorio en GitHub (`SonicWD/SECOP-II-`).
-2. Desplegar la **API** (Render, Railway o HF Spaces Docker) con `api/` y el joblib.
-3. Desplegar **web** en Vercel con variable `API_URL` apuntando a la API pública.
-4. Actualizar la URL en la presentación PowerPoint de la entrega.
+El `Dockerfile` construye la UI (Next export) y la sirve desde FastAPI en el **mismo origen** (`/` + `/api/*`).
+
+1. Repo: https://github.com/SonicWD/SECOP-II-
+2. **Render**: conectar el repo; usa `render.yaml` (Docker, health `/api/health`).
+3. **Hugging Face Spaces**: Space tipo Docker apuntando a este Dockerfile.
+4. Local unificado (después de `STATIC_EXPORT=1 npm run build` y copiar `web/out` → `api/static`):
+
+```bash
+cd api
+uvicorn main:app --port 8000
+# UI+API en http://127.0.0.1:8000
+```
 
 ## Licencia de uso académico
 
