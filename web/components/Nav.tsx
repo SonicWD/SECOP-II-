@@ -13,8 +13,14 @@ const LINKS = [
   { id: "curso", label: "Curso" },
 ] as const;
 
+type SeccionId = (typeof LINKS)[number]["id"];
+
+function esSeccion(id: string): id is SeccionId {
+  return LINKS.some((l) => l.id === id);
+}
+
 export function Nav() {
-  const [activa, setActiva] = useState<string>("demo");
+  const [activa, setActiva] = useState<SeccionId>("demo");
 
   useEffect(() => {
     const ids = LINKS.map((l) => l.id);
@@ -24,14 +30,16 @@ export function Nav() {
 
     if (!nodos.length) return;
 
-    const visto = new Map<string, number>();
+    const visto = new Map<SeccionId, number>();
 
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          visto.set(entry.target.id, entry.intersectionRatio);
+          if (esSeccion(entry.target.id)) {
+            visto.set(entry.target.id, entry.intersectionRatio);
+          }
         }
-        let mejor = ids[0];
+        let mejor: SeccionId = ids[0];
         let ratio = -1;
         for (const id of ids) {
           const r = visto.get(id) ?? 0;
@@ -43,9 +51,10 @@ export function Nav() {
         // Si casi nada está visible, usar la más cercana al tope del viewport.
         if (ratio < 0.08) {
           const ancla = window.scrollY + 120;
-          let cercana = ids[0];
+          let cercana: SeccionId = ids[0];
           let dist = Number.POSITIVE_INFINITY;
           for (const el of nodos) {
+            if (!esSeccion(el.id)) continue;
             const d = Math.abs(el.offsetTop - ancla);
             if (d < dist) {
               dist = d;
