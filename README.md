@@ -9,11 +9,14 @@ Clasifica el segmento UNSPSC de un proceso de contratación a partir del nombre 
 
 ```
 proyecto/
-├── web/          # Interfaz Next.js (look ODC / awesome-design-md)
-├── api/          # FastAPI + artifacts/modelo.joblib
+├── ml/           # Entrenamiento: descarga, 7 modelos, CV, exportar joblib
+├── api/          # FastAPI + artifacts/modelo.joblib (sirve el ganador)
+├── web/          # Interfaz Next.js
 ├── DESIGN.md     # Sistema visual
 └── README.md
 ```
+
+Laboratorio ML (video / explicación de código): ver `ml/README.md`.
 
 ## Requisitos
 

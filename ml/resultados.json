@@ -1,0 +1,486 @@
+{
+  "fuente": "https://www.datos.gov.co/Gastos-Gubernamentales/SECOP-II-Procesos-de-Contrataci-n/p6dx-8zbt",
+  "dataset_id": "p6dx-8zbt",
+  "universo_por_tipo": [
+    {
+      "tipo_de_contrato": "Prestación de servicios",
+      "n": "6087563"
+    },
+    {
+      "tipo_de_contrato": "Decreto 092 de 2017",
+      "n": "1331781"
+    },
+    {
+      "tipo_de_contrato": "Suministros",
+      "n": "773980"
+    },
+    {
+      "tipo_de_contrato": "Otro",
+      "n": "387614"
+    },
+    {
+      "tipo_de_contrato": "Compraventa",
+      "n": "349567"
+    },
+    {
+      "tipo_de_contrato": "Obra",
+      "n": "150940"
+    },
+    {
+      "tipo_de_contrato": "No",
+      "n": "94975"
+    },
+    {
+      "tipo_de_contrato": "No Especificado",
+      "n": "85789"
+    },
+    {
+      "tipo_de_contrato": "Arrendamiento de inmuebles",
+      "n": "48458"
+    },
+    {
+      "tipo_de_contrato": "Seguros",
+      "n": "34232"
+    },
+    {
+      "tipo_de_contrato": "Interventoría",
+      "n": "29688"
+    },
+    {
+      "tipo_de_contrato": "Consultoría",
+      "n": "24901"
+    },
+    {
+      "tipo_de_contrato": "Comodato",
+      "n": "14009"
+    },
+    {
+      "tipo_de_contrato": "Acuerdo Marco de Precios",
+      "n": "11259"
+    },
+    {
+      "tipo_de_contrato": "Arrendamiento de muebles",
+      "n": "9175"
+    },
+    {
+      "tipo_de_contrato": "Servicios financieros",
+      "n": "6042"
+    },
+    {
+      "tipo_de_contrato": "Operaciones de Crédito Público",
+      "n": "1635"
+    },
+    {
+      "tipo_de_contrato": "Concesión",
+      "n": "1499"
+    },
+    {
+      "tipo_de_contrato": "Venta muebles",
+      "n": "1400"
+    },
+    {
+      "tipo_de_contrato": "Asociación Público Privada",
+      "n": "1177"
+    },
+    {
+      "tipo_de_contrato": "Negocio fiduciario",
+      "n": "693"
+    },
+    {
+      "tipo_de_contrato": "Venta inmuebles",
+      "n": "381"
+    },
+    {
+      "tipo_de_contrato": "Comisión",
+      "n": "298"
+    },
+    {
+      "tipo_de_contrato": "No definido",
+      "n": "74"
+    },
+    {
+      "tipo_de_contrato": "Acuerdo de cooperación",
+      "n": "27"
+    },
+    {
+      "tipo_de_contrato": "Empréstito",
+      "n": "4"
+    }
+  ],
+  "filas_descargadas": 32000,
+  "filas_modelo": 11078,
+  "n_train": 8862,
+  "n_test": 2216,
+  "n_clases": 42,
+  "vocabulario": 14898,
+  "fecha_min": null,
+  "fecha_max": null,
+  "texto_mediana_caracteres": 270,
+  "departamentos": 34,
+  "clases": [
+    {
+      "segmento": "72",
+      "n": 700,
+      "nombre": "Edificación y construcción"
+    },
+    {
+      "segmento": "80",
+      "n": 700,
+      "nombre": "Servicios de gestión y administrativos"
+    },
+    {
+      "segmento": "81",
+      "n": 700,
+      "nombre": "Ingeniería, investigación y tecnología"
+    },
+    {
+      "segmento": "85",
+      "n": 700,
+      "nombre": "Servicios de salud"
+    },
+    {
+      "segmento": "93",
+      "n": 700,
+      "nombre": "Política y asuntos cívicos"
+    },
+    {
+      "segmento": "84",
+      "n": 670,
+      "nombre": "Servicios financieros y de seguros"
+    },
+    {
+      "segmento": "78",
+      "n": 516,
+      "nombre": "Transporte, almacenamiento y correo"
+    },
+    {
+      "segmento": "43",
+      "n": 460,
+      "nombre": "Tecnologías de la información"
+    },
+    {
+      "segmento": "86",
+      "n": 445,
+      "nombre": "Servicios educativos y de capacitación"
+    },
+    {
+      "segmento": "42",
+      "n": 364,
+      "nombre": "Equipo médico"
+    },
+    {
+      "segmento": "82",
+      "n": 330,
+      "nombre": "Servicios editoriales y de diseño"
+    },
+    {
+      "segmento": "44",
+      "n": 316,
+      "nombre": "Oficina y papelería"
+    },
+    {
+      "segmento": "90",
+      "n": 294,
+      "nombre": "Viajes, alimentación y entretenimiento"
+    },
+    {
+      "segmento": "41",
+      "n": 259,
+      "nombre": "Equipo de laboratorio"
+    },
+    {
+      "segmento": "60",
+      "n": 212,
+      "nombre": "Instrumentos musicales, juegos y artes"
+    },
+    {
+      "segmento": "77",
+      "n": 207,
+      "nombre": "Servicios ambientales"
+    },
+    {
+      "segmento": "76",
+      "n": 205,
+      "nombre": "Limpieza industrial"
+    },
+    {
+      "segmento": "46",
+      "n": 198,
+      "nombre": "Seguridad y orden público"
+    },
+    {
+      "segmento": "47",
+      "n": 197,
+      "nombre": "Limpieza y aseo"
+    },
+    {
+      "segmento": "14",
+      "n": 167,
+      "nombre": "Papel y productos de papel"
+    },
+    {
+      "segmento": "53",
+      "n": 167,
+      "nombre": "Ropa y cuidado personal"
+    },
+    {
+      "segmento": "83",
+      "n": 167,
+      "nombre": "Servicios públicos y saneamiento"
+    },
+    {
+      "segmento": "70",
+      "n": 166,
+      "nombre": "Servicios de agricultura, pesca y silvicultura"
+    },
+    {
+      "segmento": "31",
+      "n": 165,
+      "nombre": "Componentes de manufactura"
+    },
+    {
+      "segmento": "25",
+      "n": 156,
+      "nombre": "Vehículos comerciales"
+    },
+    {
+      "segmento": "50",
+      "n": 155,
+      "nombre": "Alimentos y bebidas"
+    },
+    {
+      "segmento": "15",
+      "n": 142,
+      "nombre": "Combustibles y lubricantes"
+    },
+    {
+      "segmento": "56",
+      "n": 142,
+      "nombre": "Muebles y mobiliario"
+    },
+    {
+      "segmento": "40",
+      "n": 138,
+      "nombre": "Climatización y distribución de fluidos"
+    },
+    {
+      "segmento": "51",
+      "n": 129,
+      "nombre": "Medicamentos y productos farmacéuticos"
+    },
+    {
+      "segmento": "92",
+      "n": 122,
+      "nombre": "Defensa nacional y orden público"
+    },
+    {
+      "segmento": "10",
+      "n": 120,
+      "nombre": "Material vivo vegetal y animal"
+    },
+    {
+      "segmento": "39",
+      "n": 116,
+      "nombre": "Sistemas eléctricos e iluminación"
+    },
+    {
+      "segmento": "55",
+      "n": 110,
+      "nombre": "Publicaciones"
+    },
+    {
+      "segmento": "49",
+      "n": 109,
+      "nombre": "Deporte y recreación"
+    },
+    {
+      "segmento": "52",
+      "n": 104,
+      "nombre": "Electrodomésticos y electrónicos de consumo"
+    },
+    {
+      "segmento": "30",
+      "n": 100,
+      "nombre": "Componentes estructurales"
+    },
+    {
+      "segmento": "91",
+      "n": 92,
+      "nombre": "Servicios personales y domésticos"
+    },
+    {
+      "segmento": "73",
+      "n": 90,
+      "nombre": "Producción industrial"
+    },
+    {
+      "segmento": "95",
+      "n": 85,
+      "nombre": "Terrenos, edificios y estructuras"
+    },
+    {
+      "segmento": "24",
+      "n": 83,
+      "nombre": "Manejo de materiales"
+    },
+    {
+      "segmento": "12",
+      "n": 80,
+      "nombre": "Químicos y gases"
+    }
+  ],
+  "modelos_probados": 7,
+  "criterio": "F1 macro medio de validación cruzada de cinco pliegues sobre el entrenamiento",
+  "modelo_seleccionado": "Regresión logística C=4",
+  "resultados": [
+    {
+      "modelo": "Regresión logística C=4",
+      "f1_macro_cv": 0.4879,
+      "f1_macro_cv_std": 0.0078,
+      "f1_macro_prueba": 0.5056,
+      "f1_ponderado_prueba": 0.5613,
+      "exactitud_prueba": 0.5609
+    },
+    {
+      "modelo": "SVM lineal",
+      "f1_macro_cv": 0.4754,
+      "f1_macro_cv_std": 0.0162,
+      "f1_macro_prueba": 0.4941,
+      "f1_ponderado_prueba": 0.5535,
+      "exactitud_prueba": 0.5555
+    },
+    {
+      "modelo": "Regresión logística C=1",
+      "f1_macro_cv": 0.474,
+      "f1_macro_cv_std": 0.0066,
+      "f1_macro_prueba": 0.4926,
+      "f1_ponderado_prueba": 0.5311,
+      "exactitud_prueba": 0.5293
+    },
+    {
+      "modelo": "Naive Bayes complementario",
+      "f1_macro_cv": 0.435,
+      "f1_macro_cv_std": 0.0078,
+      "f1_macro_prueba": 0.4778,
+      "f1_ponderado_prueba": 0.5274,
+      "exactitud_prueba": 0.5447
+    },
+    {
+      "modelo": "Naive Bayes multinomial",
+      "f1_macro_cv": 0.4187,
+      "f1_macro_cv_std": 0.0094,
+      "f1_macro_prueba": 0.4422,
+      "f1_ponderado_prueba": 0.5127,
+      "exactitud_prueba": 0.5338
+    },
+    {
+      "modelo": "LSA 100 + logística",
+      "f1_macro_cv": 0.3493,
+      "f1_macro_cv_std": 0.0043,
+      "f1_macro_prueba": 0.3645,
+      "f1_ponderado_prueba": 0.4102,
+      "exactitud_prueba": 0.4075
+    },
+    {
+      "modelo": "Base (clase mayoritaria)",
+      "f1_macro_cv": 0.0028,
+      "f1_macro_cv_std": 0.0,
+      "f1_macro_prueba": 0.0028,
+      "f1_ponderado_prueba": 0.0075,
+      "exactitud_prueba": 0.0632
+    }
+  ],
+  "por_clase_peores": [
+    {
+      "segmento": "73",
+      "nombre": "Producción industrial",
+      "precision": 0.1379,
+      "recall": 0.2222,
+      "f1": 0.1702,
+      "soporte": 18
+    },
+    {
+      "segmento": "30",
+      "nombre": "Componentes estructurales",
+      "precision": 0.2,
+      "recall": 0.15,
+      "f1": 0.1714,
+      "soporte": 20
+    },
+    {
+      "segmento": "95",
+      "nombre": "Terrenos, edificios y estructuras",
+      "precision": 0.2,
+      "recall": 0.2353,
+      "f1": 0.2162,
+      "soporte": 17
+    },
+    {
+      "segmento": "14",
+      "nombre": "Papel y productos de papel",
+      "precision": 0.25,
+      "recall": 0.2121,
+      "f1": 0.2295,
+      "soporte": 33
+    },
+    {
+      "segmento": "70",
+      "nombre": "Servicios de agricultura, pesca y silvicultura",
+      "precision": 0.2353,
+      "recall": 0.2424,
+      "f1": 0.2388,
+      "soporte": 33
+    }
+  ],
+  "por_clase_mejores": [
+    {
+      "segmento": "15",
+      "nombre": "Combustibles y lubricantes",
+      "precision": 0.8276,
+      "recall": 0.8571,
+      "f1": 0.8421,
+      "soporte": 28
+    },
+    {
+      "segmento": "84",
+      "nombre": "Servicios financieros y de seguros",
+      "precision": 0.8824,
+      "recall": 0.7836,
+      "f1": 0.83,
+      "soporte": 134
+    },
+    {
+      "segmento": "91",
+      "nombre": "Servicios personales y domésticos",
+      "precision": 0.9286,
+      "recall": 0.7222,
+      "f1": 0.8125,
+      "soporte": 18
+    },
+    {
+      "segmento": "92",
+      "nombre": "Defensa nacional y orden público",
+      "precision": 0.8182,
+      "recall": 0.75,
+      "f1": 0.7826,
+      "soporte": 24
+    },
+    {
+      "segmento": "85",
+      "nombre": "Servicios de salud",
+      "precision": 0.719,
+      "recall": 0.7857,
+      "f1": 0.7509,
+      "soporte": 140
+    }
+  ],
+  "busqueda": {
+    "consultas": 400,
+    "recall_at_5": 0.6975,
+    "mrr_at_5": 0.5289
+  },
+  "segundos": 104.9,
+  "semilla": 42,
+  "min_clase": 80,
+  "tope_clase": 700
+}
